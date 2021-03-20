@@ -7,6 +7,7 @@
 #include <opencv2/imgproc.hpp>
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/videoio.hpp>
+#include <random>
 
 int main()
 {
@@ -18,5 +19,15 @@ int main()
     cv::Size image_resolution = { aspect_ratio[0] * img_scale,aspect_ratio[1] * img_scale };
     cv::Size grid_resolution = { aspect_ratio[0] * grid_scale,aspect_ratio[1] * grid_scale };
 
-    hmath::
+    hmath::VectorField2d perlin_field;
+
+    for (size_t j = 0; j < grid_resolution.height; j++)
+    {
+        for (size_t i = 0; i < grid_resolution.width; i++)
+        {
+            /* code */
+        }
+        
+    }
+    
 }
