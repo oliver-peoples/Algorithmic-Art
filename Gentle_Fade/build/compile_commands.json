@@ -1,7 +1,0 @@
-[
-{
-  "directory": "/home/finn/Algorithmic-Art/Gentle_Fade/build",
-  "command": "/usr/bin/g++-9  -I/home/finn/Hamiltonian-Mathematics -I/home/finn/C-Geometry -isystem /usr/local/include/opencv4 -g -o CMakeFiles/Gentle_Fade.dir/source.cpp.o -c /home/finn/Algorithmic-Art/Gentle_Fade/source.cpp",
-  "file": "/home/finn/Algorithmic-Art/Gentle_Fade/source.cpp"
-}
-]
