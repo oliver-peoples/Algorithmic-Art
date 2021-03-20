@@ -1,0 +1,3 @@
+/home/finn/Algorithmic-Art/Perlin_Lines_2/build/CMakeFiles/rebuild_cache.dir
+/home/finn/Algorithmic-Art/Perlin_Lines_2/build/CMakeFiles/Perlin_Lines_2.dir
+/home/finn/Algorithmic-Art/Perlin_Lines_2/build/CMakeFiles/edit_cache.dir

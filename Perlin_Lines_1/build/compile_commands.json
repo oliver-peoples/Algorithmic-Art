@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/home/finn/Algorithmic-Art/Perlin_Lines_1/build",
+  "command": "/usr/bin/g++-9  -I/home/finn/Hamiltonian-Mathematics -I/home/finn/C-Geometry -isystem /usr/local/include/opencv4 -g -o CMakeFiles/Perlin_Lines_1.dir/source.cpp.o -c /home/finn/Algorithmic-Art/Perlin_Lines_1/source.cpp",
+  "file": "/home/finn/Algorithmic-Art/Perlin_Lines_1/source.cpp"
+}
+]
