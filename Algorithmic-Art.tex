@@ -44,13 +44,26 @@ The most obvious method to transition from one image to another is just do exact
 \end{equation}
 Alternatively, we could use the mathematical equivalent which uses only addition on $v_{1,2}$:
 \begin{equation}\label{eq:addition-interpolation}
-  v_{\alpha} = (1-\alpha)v_{1}+\alpha v_{2}
+  v_{\alpha} = v_{1}(1-\alpha)+\alpha v_{2}
 \end{equation}
+With either equation, we achieve the following result:
+\begin{multline}
+  v_{\alpha}=\\
+  27 + 0.45\left(33-27\right)\\
+  27+2.7\\
+  =29.7
+\end{multline}
+\begin{multline}
+  v_{\alpha}=\\
+  27\left(1-0.45\right)+0.45\cdot 33\\
+  14.85+14.85\\
+  =29.7
+\end{multline}
 It should not be too great a leap of logic to subsitute our images $\mathcal{I}_{1,2}$ into either \ref{eq:subtraction-interpolation} or \ref{eq:addition-interpolation}, and utilize scalar multiplication on matrices to accomplish what the equations do:
 \begin{equation}
   \mathcal{I}_{\alpha}=\left(1-\alpha\right)\mathcal{I}_{1}+\alpha\mathcal{I}_{2}
 \end{equation}
-
+Programmatically, when this is implemented in OpenCV~\cite{opencv_library}
 
 \bibliography{ref}
 \bibliographystyle{IEEEtran}
