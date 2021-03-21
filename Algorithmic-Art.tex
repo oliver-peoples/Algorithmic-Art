@@ -12,6 +12,7 @@
 \usepackage{graphicx}
 \usepackage{tikz}
 \usepackage{pgfplots}
+\usepackage[linesnumbered,ruled,vlined]{algorithm2e}
 \pgfplotsset{compat=1.16}
 
 \author{Oliver Kirkpatrick}
@@ -72,7 +73,28 @@ Randomized vector fields provide what is (arguably) the simplest introduction to
   \includegraphics[width=0.9\textwidth]{media/ballet_example.png}
   \caption{A number of predicted paths with varying ascent rate.}
 \end{figure}
-In the back end of path prediction simulations, the nodes of $\mathbb{R}^{2}$ vectors are $\in \mathbb{R}^{4}$. This allows the experienced wind field to change with time. This is a similar goal for dynamic algorithmic art; multiple frames approaching a representation of a continuously
+In the back end of path prediction simulations, the nodes of $\mathbb{R}^{2}$ vectors are $\in \mathbb{R}^{4}$. This allows the experienced wind field to change with time. This is a similar goal for dynamic algorithmic art; multiple frames approaching a representation of a continuously changin, time-variant set of paths. However, in the desired algorithmic art, time brings the field to three dimensions, as frame is two dimensional.
+\subsection{Field Generation}
+Developing the vector field required for this simple algorithmic art is rather trivial. As mentioned earlier, the field will be three dimensional, with each node being a vector $\in \mathbb{R}^{2}$. Developing this field begins with establishing an order for the dimensions of the field. For the sake of programmatic ease, the field is ordered $t,i,j$. With this structure, insertion of $\mathbb{R}^{2}$ vectors into columns, and columns into fields, and fields into time stacks can be done with nested stacks of C++ \texttt{std::vector} elements, like so:
+
+\begin{algorithm}[H]
+  $cells \in \mathbb{Z}^{2}_{+}$\\
+  $grid = cells + \left[1,1\right]$\\
+  $t_{steps} \in \mathbb{Z}_{+}$\\
+  $T$
+  \For{$t = 0; t \leq t_{steps}$}
+  {
+    \For{$i = 0; i \leq cells_{1}$}
+    {
+      \For{$j = 0; j \leq cells_{2}$}
+      {
+        test
+      }
+    }
+  }
+
+\caption{Example code}
+\end{algorithm}
 
 \bibliography{ref}
 \bibliographystyle{IEEEtran}
