@@ -64,6 +64,15 @@ It should not be too great a leap of logic to subsitute our images $\mathcal{I}_
   \mathcal{I}_{\alpha}=\left(1-\alpha\right)\mathcal{I}_{1}+\alpha\mathcal{I}_{2}
 \end{equation}
 Programmatically, when this is implemented in OpenCV~\cite{opencv_library}
+\section{Randomized Vector Fields}
+\subsection{\textit{Basic} Art}
+Randomized vector fields provide what is (arguably) the simplest introduction to algorithmic art. Even without the intent of being artistic, it is exceptionally easy for elegant and beautiful patterns to arise naturally from everyday applications of vector fields. For instance, the original motivation for this foray into algorithmic art was high altitude balloon (HAB) path predictions\textemdash a classical application of vector fields, though with slight modification. In path prediction, due to the lack of vertical component (in a $i,j,k=N,E,U$ system) in the forecasts provided by major weather services, the only vertical speed which a HAB carries is its ascent rate. This ascent rate is considered constant in thermodynamically naive simulations, and variable in more detailed simulations, though ascent rate change throughout a flight is negligible even with a thermodynamic model. Hence, these simulations provide somewhat of a fitting analogy dynamic algorithmic art, as the vectors in both fields are $\in \mathbb{R}^{2}$.
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.9\textwidth]{media/ballet_example.png}
+  \caption{A number of predicted paths with varying ascent rate.}
+\end{figure}
+In the back end of path prediction simulations, the nodes of $\mathbb{R}^{2}$ vectors are $\in \mathbb{R}^{4}$. This allows the experienced wind field to change with time. This is a similar goal for dynamic algorithmic art; multiple frames approaching a representation of a continuously
 
 \bibliography{ref}
 \bibliographystyle{IEEEtran}

@@ -27,18 +27,21 @@ int main()
     // You can adjust these
 
     cv::Size aspect_ratio = { 16,9 };
-    double grid_subsampling = 20;
-    int top = 1920;
-    size_t t_duration = 300;
-    double t_step_size = 0.1;
+    double grid_subsampling = 40;
+    int top = 1024;
+    size_t t_duration = 10;
+    double t_step_size = 0.01;
     size_t particles = 5000;
     double alpha_fade = 0.9;
-    size_t iteration_limit = 200;
+    size_t iteration_limit = 300;
     size_t frame_memory = 30;
     double scalar = 1;
-    int line_thickness = 3;
+    int line_thickness = 1;
+    cv::Scalar background = { 75,0,0 };
+    cv::Scalar line_color = { 255,255,255 };
+    bool blur = false;
 
-    cv::Size cells = { 15,8 };
+    cv::Size cells = { 64,40 };
 
     // Don't touch anything below here unless you really know
     // what you are doing, just read!
@@ -75,7 +78,7 @@ int main()
 
             for (size_t j = 0; j <= cells.height; j++)
             { 
-                column.push_back({ randDouble(),randDouble() });
+                column.push_back(hmath::Vector2(randDouble(),randDouble()).normed());
             }
 
             columns.push_back(column);
@@ -95,9 +98,9 @@ int main()
     int frame_n = 0;
     int n_frames = t_duration / t_step_size;
 
-    for (size_t t_step = 0; t_step < t_duration; t_step += t_step_size)
+    for (double t_step = 0; t_step < t_duration; t_step += t_step_size)
     {
-        std::cout << "Progress: " << int(double(frame_n) / double(n_frames) * 100) << "%\r";
+        std::cout << "Progress: " << int((double(frame_n) / double(n_frames)) * 100) << "%\r";
         std::cout.flush();
 
         std::vector<Particle> t_step_particles = master_particles;
@@ -106,7 +109,7 @@ int main()
 
         size_t iteration = 0;
 
-        cv::Mat frame(img_size, CV_8UC4, { 255,255,255 });
+        cv::Mat frame(img_size, CV_8UC3, background);
 
         while (remaining_particles > 0 && iteration < iteration_limit)
         {
@@ -121,7 +124,7 @@ int main()
 
                     if (vector_field.inField(t_step_particles[particle_n].position))
                     {
-                        cv::line(frame, { old_position.j * grid_img_map.i,old_position.k * grid_img_map.j }, { t_step_particles[particle_n].position.j * grid_img_map.i,t_step_particles[particle_n].position.k * grid_img_map.j }, { 255,100,50 }, line_thickness);
+                        cv::line(frame, { old_position.j * grid_img_map.i,old_position.k * grid_img_map.j }, { t_step_particles[particle_n].position.j * grid_img_map.i,t_step_particles[particle_n].position.k * grid_img_map.j }, line_color, line_thickness);
                     }
                     
                     else
@@ -140,8 +143,15 @@ int main()
             particle.position.i += t_step_size;
         }
 
-        cv::GaussianBlur(frame, frame, { 31,31 }, 4, 4);
+        if (blur)
+        {
+            cv::GaussianBlur(frame, frame, { 31,31 }, 4, 4);
+        }
+        
         vector_field_art.write(frame);
+
+        cv::imshow("Trace", frame);
+        cv::waitKey(10);
 
         frame_n ++;
     }
