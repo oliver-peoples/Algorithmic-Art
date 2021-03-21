@@ -26,21 +26,22 @@ int main()
     // You can adjust these
 
     cv::Size aspect_ratio = { 16,9 };
-    double grid_subsampling = 40;
-    int top = 3840;
-    size_t t_duration = 10;
+    double grid_subsampling = 0.5;
+    int top = 1024;
+    size_t t_duration = 20;
     double t_step_size = 0.01;
-    size_t particles = 1500;
+    size_t particles = 5000;
     // double alpha_fade = 0.9;
-    size_t iteration_limit = 500;
+    size_t iteration_limit = 300;
     // size_t frame_memory = 30;
-    double scalar = 1;
+    double scalar = 0.1;
     int line_thickness = 1;
     cv::Scalar background = { 20,0,0 };
     cv::Scalar line_color = { 255,0,0 };
-    bool blur = true;
+    bool blur = false;
+    bool record = true;
 
-    cv::Size cells = { 6,4 };
+    cv::Size cells = { 160,90 };
 
     // Don't touch anything below here unless you really know
     // what you are doing, just read!
@@ -52,8 +53,13 @@ int main()
     hmath::Vector2 grid_spatial_dimensions = { double(cells.width) * grid_subsampling,double(cells.height) * grid_subsampling };
     hmath::Vector2 grid_img_map = { double(img_size.width) / grid_spatial_dimensions.i,double(img_size.height) / grid_spatial_dimensions.j };
     
-    cv::VideoWriter vector_field_art("../vector_field_art.mp4", cv::VideoWriter::fourcc('m','p','4','v'), 60, img_size, true);
+    cv::VideoWriter vector_field_art;
 
+    if (record)
+    {
+        vector_field_art.open("../vector_field_art.mp4", cv::VideoWriter::fourcc('m','p','4','v'), 60, img_size, true);
+    }
+    
     std::cout << "\nRunning random spatiotemporal vector field simulation! Here are the simulation parameters:\n" << std::endl;
     std::cout << " > Image aspect ratio: " << aspect_ratio << std::endl;
     std::cout << " > Image dimensions: " << img_size << std::endl;
@@ -155,7 +161,10 @@ int main()
         frame_n ++;
     }
 
-    vector_field_art.release();
-
+    if (record)
+    {
+        vector_field_art.release();
+    }
+    
     return 0;  
 }
