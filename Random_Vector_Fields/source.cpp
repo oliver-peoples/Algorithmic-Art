@@ -21,27 +21,26 @@ struct Particle
     hmath::Vector3 position;
 };
 
-
 int main()
 {
     // You can adjust these
 
     cv::Size aspect_ratio = { 16,9 };
     double grid_subsampling = 40;
-    int top = 1024;
+    int top = 3840;
     size_t t_duration = 10;
     double t_step_size = 0.01;
-    size_t particles = 5000;
-    double alpha_fade = 0.9;
-    size_t iteration_limit = 300;
-    size_t frame_memory = 30;
+    size_t particles = 1500;
+    // double alpha_fade = 0.9;
+    size_t iteration_limit = 500;
+    // size_t frame_memory = 30;
     double scalar = 1;
     int line_thickness = 1;
-    cv::Scalar background = { 75,0,0 };
-    cv::Scalar line_color = { 255,255,255 };
-    bool blur = false;
+    cv::Scalar background = { 20,0,0 };
+    cv::Scalar line_color = { 255,0,0 };
+    bool blur = true;
 
-    cv::Size cells = { 64,40 };
+    cv::Size cells = { 6,4 };
 
     // Don't touch anything below here unless you really know
     // what you are doing, just read!
@@ -145,7 +144,7 @@ int main()
 
         if (blur)
         {
-            cv::GaussianBlur(frame, frame, { 31,31 }, 4, 4);
+            cv::GaussianBlur(frame, frame, { 71,71 }, 30, 30);
         }
         
         vector_field_art.write(frame);
@@ -156,5 +155,7 @@ int main()
         frame_n ++;
     }
 
-    vector_field_art.release();    
+    vector_field_art.release();
+
+    return 0;  
 }
