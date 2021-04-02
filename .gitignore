@@ -4,3 +4,23 @@ Gentle_Fade/build/
 Perlin_Lines_1/build/
 
 *.mp4
+
+Random_Vector_Fields/build/
+
+Perlin_Lines_2/build/
+
+*.gz
+
+*.out
+
+*.log
+
+*.fls
+
+*.fdb_latexmk
+
+*.aux
+
+.Rhistory
+
+.idea/

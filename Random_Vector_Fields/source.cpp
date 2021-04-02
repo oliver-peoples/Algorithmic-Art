@@ -26,22 +26,22 @@ int main()
     // You can adjust these
 
     cv::Size aspect_ratio = { 16,9 };
-    double grid_subsampling = 0.5;
+    double grid_subsampling = 2;
     int top = 1024;
     size_t t_duration = 20;
     double t_step_size = 0.01;
     size_t particles = 5000;
-    // double alpha_fade = 0.9;
     size_t iteration_limit = 300;
-    // size_t frame_memory = 30;
     double scalar = 0.1;
     int line_thickness = 1;
     cv::Scalar background = { 20,0,0 };
-    cv::Scalar line_color = { 255,0,0 };
+    cv::Scalar line_color = { 255,255,255 };
     bool blur = false;
-    bool record = true;
+    bool record = false;
+    bool normed = false;
+    bool display_vectors = true;
 
-    cv::Size cells = { 160,90 };
+    cv::Size cells = { 16,9 };
 
     // Don't touch anything below here unless you really know
     // what you are doing, just read!
@@ -50,6 +50,7 @@ int main()
 
     cv::Size img_size = { top,int(ceil(double(top) * (double(aspect_ratio.height) / double(aspect_ratio.width))))};
     cv::Size points = { cells.width + 1,cells.height + 1 };
+    double cell_edge = grid_subsampling;
     hmath::Vector2 grid_spatial_dimensions = { double(cells.width) * grid_subsampling,double(cells.height) * grid_subsampling };
     hmath::Vector2 grid_img_map = { double(img_size.width) / grid_spatial_dimensions.i,double(img_size.height) / grid_spatial_dimensions.j };
     
@@ -82,8 +83,17 @@ int main()
             std::vector<hmath::Vector2> column;
 
             for (size_t j = 0; j <= cells.height; j++)
-            { 
-                column.push_back(hmath::Vector2(randDouble(),randDouble()).normed());
+            {
+                if (normed)
+                {
+                    column.push_back(hmath::Vector2(randDouble(),randDouble()).normed());
+                }
+                
+                else
+                {
+                    column.push_back((hmath::Vector2(randDouble(),randDouble()) * abs(randDouble())));
+                }
+                
             }
 
             columns.push_back(column);
@@ -99,11 +109,10 @@ int main()
         master_particles.push_back({ true,{ 0,abs(randDouble()) * grid_spatial_dimensions.i,abs(randDouble()) * grid_spatial_dimensions.j } });
     }
 
-    std::vector<cv::Mat> frames;
     int frame_n = 0;
     int n_frames = t_duration / t_step_size;
 
-    for (double t_step = 0; t_step < t_duration; t_step += t_step_size)
+    for (double t_step = 0; t_step < (t_duration * grid_subsampling); t_step += (t_step_size * grid_subsampling))
     {
         std::cout << "Progress: " << int((double(frame_n) / double(n_frames)) * 100) << "%\r";
         std::cout.flush();
@@ -150,8 +159,26 @@ int main()
 
         if (blur)
         {
-            cv::GaussianBlur(frame, frame, { 71,71 }, 30, 30);
+            cv::GaussianBlur(frame, frame, { 5,5 }, 30, 30);
         }
+
+		if (display_vectors)
+		{
+            for (double j = 0; j < points.height; j++)
+            {
+                for (double i = 0; i < points.width; i++)
+                {
+                    cv::Point local_origin = { i * cell_edge * grid_img_map.i,j * cell_edge * grid_img_map.j };
+
+                    hmath::Vector2 t0_vector = vector_field.getField()[int(floor(t_step))][int(i)][int(j)];
+                    hmath::Vector2 t1_vector = vector_field.getField()[int(ceil(t_step))][int(i)][int(j)];
+
+                    hmath::Vector2 lerped_vector = t0_vector + (t1_vector - t0_vector) * (2 * t_step);
+                    cv::arrowedLine(frame, { local_origin.x, local_origin.y }, { local_origin.x + lerped_vector.i * grid_img_map.i,local_origin.y + lerped_vector.j * grid_img_map.j }, { 255,0,255 }, 2);
+                }
+                
+            }
+		}
         
         vector_field_art.write(frame);
 

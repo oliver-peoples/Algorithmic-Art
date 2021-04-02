@@ -1,3 +1,0 @@
-/home/finn/Algorithmic-Art/Random_Vector_Fields/build/CMakeFiles/rebuild_cache.dir
-/home/finn/Algorithmic-Art/Random_Vector_Fields/build/CMakeFiles/Random_Vector_Fields.dir
-/home/finn/Algorithmic-Art/Random_Vector_Fields/build/CMakeFiles/edit_cache.dir
